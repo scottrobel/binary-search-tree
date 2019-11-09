@@ -1,18 +1,13 @@
 # frozen_string_literal: true
 
 require 'pry'
-# A node stores a value
-# and can be assigned 2 links to other nodes.
-class Node
-  attr_accessor :right_link, :left_link, :data
-  def initialize(data)
-    self.data = data
-  end
-end
+load 'node.rb'
+load 'balance.rb'
 # Tree class creates a balanced node tree
 # from an array when initialized
 # Does not handle duplicate values
 class Tree
+  include Balance
   attr_reader :root_node
   def initialize(array)
     @root_node = build_tree(array)
@@ -32,14 +27,54 @@ class Tree
   end
 
   def insert(data, node = root_node)
+    return if data == node.data # does not support duplicate values
+
     if data > node.data
       insert_right_node(data, node)
-    elsif data < node.data
+    else
       insert_left_node(data, node)
     end
   end
 
+  def delete(data, node = root_node)
+    return nil if node.nil?
+
+    if data < node.data
+      node.left_link = delete(data, node.left_link)
+    elsif data > node.data
+      node.right_link = delete(data, node.right_link)
+    else
+      delete_node(node)
+    end
+  end
+
   private
+
+  def delete_node(node)
+    node = if node.left_link.nil? && node.right_link.nil?
+             nil
+           elsif node.left_link.nil? || node.right_link.nil?
+             delete_single_branch_node(node)
+           else
+             delete_multibranch_node(node)
+           end
+    node
+  end
+
+  def delete_single_branch_node(node)
+    if node.left_link.nil?
+      node.right_link
+    else
+      node.left_link
+    end
+  end
+
+  def delete_multibranch_node(node)
+    temp = find_min(node.right_link)
+    node.data = temp.data
+    delete(temp.data, node.right_link)
+    node
+  end
 
   def insert_right_node(data, node)
     if node.right_link.nil?
@@ -56,15 +91,7 @@ class Tree
       insert(data, node.left_link)
     end
   end
-
-  def get_node_branch_arrays(array)
-    center_value = array[array.size / 2]
-    smaller_values = array[0..array.size / 2] - [center_value]
-    greater_values = array[array.size / 2..array.length - 1] - [center_value]
-    [smaller_values, center_value, greater_values]
-  end
 end
-my_tree = Tree.new([1, 2, 3])
-my_tree.insert(4)
-root = my_tree.root_node
-pry.binding
+
+my_tree = Tree.new([5, 2, 3, 4, 1, 6, 7, 8])
+my_tree.delete(5)
