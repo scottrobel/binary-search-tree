@@ -48,17 +48,38 @@ class Tree
     end
   end
 
+  def find(data, node = root_node)
+    return nil if node.nil?
+
+    if data == node.data
+      node
+    else
+      search_branches_for_node(data, node)
+    end
+  end
+
   private
 
+  def search_branches_for_node(data, node)
+    right_search = find(data, node.right_link)
+    left_search = find(data, node.left_link)
+    if !right_search.nil?
+      right_search
+    elsif !left_search.nil?
+      left_search
+    else
+      return nil
+    end
+  end
+
   def delete_node(node)
-    node = if node.left_link.nil? && node.right_link.nil?
-             nil
-           elsif node.left_link.nil? || node.right_link.nil?
-             delete_single_branch_node(node)
-           else
-             delete_multibranch_node(node)
-           end
-    node
+    if node.left_link.nil? && node.right_link.nil?
+      nil
+    elsif node.left_link.nil? || node.right_link.nil?
+      delete_single_branch_node(node)
+    else
+      delete_multibranch_node(node)
+    end
   end
 
   def delete_single_branch_node(node)
@@ -95,3 +116,4 @@ end
 
 my_tree = Tree.new([5, 2, 3, 4, 1, 6, 7, 8])
 my_tree.delete(5)
+my_tree.find(1)
