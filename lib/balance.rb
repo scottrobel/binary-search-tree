@@ -21,6 +21,19 @@ module Balance
     [smaller_values, center_value, greater_values]
   end
 
+  def get_level_order_array(node)
+    level_order_array = []
+    data_queue = Queue.new
+    data_queue << node
+    until data_queue.empty?
+      temp = data_queue.pop
+      level_order_array << temp.data
+      data_queue << temp.right_link unless temp.right_link.nil?
+      data_queue << temp.left_link unless temp.left_link.nil?
+    end
+    level_order_array
+  end
+
   private
 
   def find_min_of_multibranch_node(node)

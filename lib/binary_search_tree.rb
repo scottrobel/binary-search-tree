@@ -58,6 +58,14 @@ class Tree
     end
   end
 
+  def level_order(*args)
+    level_order_array = get_level_order_array(root_node)
+    level_order_array.each do |data_value|
+      args[0].call(data_value) if args[0].class == Proc
+      yield(data_value) if block_given?
+    end
+  end
+
   private
 
   def search_branches_for_node(data, node)
@@ -117,3 +125,5 @@ end
 my_tree = Tree.new([5, 2, 3, 4, 1, 6, 7, 8])
 my_tree.delete(5)
 my_tree.find(1)
+loa = my_tree.level_order
+binding.pry
