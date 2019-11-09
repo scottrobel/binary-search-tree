@@ -2,6 +2,25 @@
 
 # Traverse Class contains method to Traverse the Tree
 module Traverse
+  def find(data, node = root_node)
+    return nil if node.nil?
+
+    if data == node.data
+      node
+    else
+      search_branches_for_node(data, node)
+    end
+  end
+
+  def depth(node = root_node)
+    return 1 if node.right_link.nil? && node.left_link.nil?
+
+    right_depth = node.right_link.nil? ? 0 : depth(node.right_link)
+    left_depth = node.left_link.nil? ? 0 : depth(node.left_link)
+    depth = right_depth < left_depth ? left_depth : right_depth
+    depth + 1
+  end
+
   private
 
   def search_branches_for_node(data, node)
