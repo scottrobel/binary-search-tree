@@ -65,65 +65,14 @@ class Tree
       yield(data_value) if block_given?
     end
   end
-
-  private
-
-  def search_branches_for_node(data, node)
-    right_search = find(data, node.right_link)
-    left_search = find(data, node.left_link)
-    if !right_search.nil?
-      right_search
-    elsif !left_search.nil?
-      left_search
-    else
-      return nil
-    end
-  end
-
-  def delete_node(node)
-    if node.left_link.nil? && node.right_link.nil?
-      nil
-    elsif node.left_link.nil? || node.right_link.nil?
-      delete_single_branch_node(node)
-    else
-      delete_multibranch_node(node)
-    end
-  end
-
-  def delete_single_branch_node(node)
-    if node.left_link.nil?
-      node.right_link
-    else
-      node.left_link
-    end
-  end
-
-  def delete_multibranch_node(node)
-    temp = find_min(node.right_link)
-    node.data = temp.data
-    delete(temp.data, node.right_link)
-    node
-  end
-
-  def insert_right_node(data, node)
-    if node.right_link.nil?
-      node.right_link = Node.new(data)
-    else
-      insert(data, node.right_link)
-    end
-  end
-
-  def insert_left_node(data, node)
-    if node.left_link.nil?
-      node.left_link = Node.new(data)
-    else
-      insert(data, node.left_link)
-    end
-  end
 end
 
 my_tree = Tree.new([5, 2, 3, 4, 1, 6, 7, 8])
 my_tree.delete(5)
 my_tree.find(1)
-loa = my_tree.level_order
-binding.pry
+my_tree.level_order { |a| print a }
+my_proc = proc { |data| print data }
+my_lambda = ->(data) { print data }
+my_tree.level_order(&my_proc)
+my_tree.level_order(&my_lambda)
+my_tree.level_order { |a| print a }
