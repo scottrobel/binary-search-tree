@@ -3,11 +3,13 @@
 require 'pry'
 load 'node.rb'
 load 'balance.rb'
+load 'traverse.rb'
 # Tree class creates a balanced node tree
 # from an array when initialized
 # Does not handle duplicate values
 class Tree
   include Balance
+  include Traverse
   attr_reader :root_node
   def initialize(array)
     @root_node = build_tree(array)
@@ -24,6 +26,26 @@ class Tree
     node.right_link = build_tree(greater_values)
     node.left_link = build_tree(smaller_values)
     node
+  end
+
+  def preorder(*args)
+    array = get_preorder_array(root_node)
+    iterate_array(array, args) { |a| yield(a) if block_given? }
+  end
+
+  def inorder(*args)
+    array = get_inorder_array(root_node)
+    iterate_array(array, args) { |a| yield(a) if block_given? }
+  end
+
+  def postorder(*args)
+    array = get_postorder_array(root_node)
+    iterate_array(array, args) { |a| yield(a) if block_given? }
+  end
+
+  def level_order(*args)
+    array = get_level_order_array(root_node)
+    iterate_array(array, args) { |a| yield(a) if block_given? }
   end
 
   def insert(data, node = root_node)
@@ -57,14 +79,6 @@ class Tree
       search_branches_for_node(data, node)
     end
   end
-
-  def level_order(*args)
-    level_order_array = get_level_order_array(root_node)
-    level_order_array.each do |data_value|
-      args[0].call(data_value) if args[0].class == Proc
-      yield(data_value) if block_given?
-    end
-  end
 end
 # my_tree.delete(5)
 # my_tree.find(1)
@@ -75,5 +89,12 @@ end
 # my_tree.level_order(&my_lambda)
 # my_tree.level_order { |a| print a }
 # my_tree.level_order.inject{ |a, b| a + b }
-my_tree = Tree.new([1])
-my_tree.preorder
+my_tree = Tree.new([1, 2, 3, 4])
+my_tree.preorder { |a| print a }
+print "\n"
+my_tree.postorder { |a| print a }
+print "\n"
+my_tree.inorder { |a| print a }
+print "\n"
+my_tree.level_order { |a| print a }
+print "\n"

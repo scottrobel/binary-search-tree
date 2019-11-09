@@ -4,84 +4,11 @@
 module Balance
   private
 
-  def get_postorder_array(node = root_node)
-    return [node.data] if node.left_link.nil? || node.right_link.nil?
-
-    preorder_array = []
-    preorder_array += get_postorder_array(node.left_link)
-    preorder_array += get_postorder_array(node.right_link)
-    preorder_array << node.data
-    preorder_array
-  end
-
-  def get_inorder_array(node = root_node)
-    return [node.data] if node.left_link.nil? || node.right_link.nil?
-
-    preorder_array = []
-    preorder_array += get_inorder_array(node.left_link)
-    preorder_array << node.data
-    preorder_array += get_inorder_array(node.right_link)
-    preorder_array
-  end
-
-  def get_preorder_array(node = root_node)
-    return [node.data] if node.left_link.nil? || node.right_link.nil?
-
-    preorder_array = []
-    preorder_array << node.data
-    preorder_array += get_preorder_array(node.left_link)
-    preorder_array += get_preorder_array(node.right_link)
-    preorder_array
-  end
-
-  def find_min(node)
-    if node.right_link.nil? && node.left_link.nil?
-      node
-    elsif node.left_link.nil?
-      find_min(node.right_link)
-    elsif node.right_link.nil?
-      find_min(node.left_link)
-    else
-      find_min_of_multibranch_node(node)
-    end
-  end
-
   def get_node_branch_arrays(array)
     center_value = array[array.size / 2]
     smaller_values = array[0..array.size / 2] - [center_value]
     greater_values = array[array.size / 2..array.length - 1] - [center_value]
     [smaller_values, center_value, greater_values]
-  end
-
-  def get_level_order_array(node)
-    level_order_array = []
-    data_queue = Queue.new
-    data_queue << node
-    until data_queue.empty?
-      temp = data_queue.pop
-      level_order_array << temp.data
-      data_queue << temp.right_link unless temp.right_link.nil?
-      data_queue << temp.left_link unless temp.left_link.nil?
-    end
-    level_order_array
-  end
-
-  def find_min_of_multibranch_node(node)
-    min_right = find_min(node.right_link)
-    min_left = find_min(node.left_link)
-    min_right.data < min_left.data ? min_right : min_left
-  end
-
-  def search_branches_for_node(data, node)
-    right_search = find(data, node.right_link)
-    left_search = find(data, node.left_link)
-    if !right_search.nil?
-      right_search
-    elsif !left_search.nil?
-      left_search
-    else
-      return nil
-    end
   end
 
   def delete_node(node)
