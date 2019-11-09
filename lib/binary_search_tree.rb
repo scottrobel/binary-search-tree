@@ -66,13 +66,14 @@ class Tree
     end
   end
 end
-
-my_tree = Tree.new([5, 2, 3, 4, 1, 6, 7, 8])
-my_tree.delete(5)
-my_tree.find(1)
-my_tree.level_order { |a| print a }
-my_proc = proc { |data| print data }
-my_lambda = ->(data) { print data }
-my_tree.level_order(&my_proc)
-my_tree.level_order(&my_lambda)
-my_tree.level_order { |a| print a }
+# my_tree.delete(5)
+# my_tree.find(1)
+# my_tree.level_order { |a| print a }
+# my_proc = proc { |data| print data }
+# my_lambda = ->(data) { print data }
+# my_tree.level_order(&my_proc)
+# my_tree.level_order(&my_lambda)
+# my_tree.level_order { |a| print a }
+# my_tree.level_order.inject{ |a, b| a + b }
+my_tree = Tree.new([1])
+my_tree.preorder

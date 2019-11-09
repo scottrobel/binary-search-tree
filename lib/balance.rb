@@ -4,6 +4,36 @@
 module Balance
   private
 
+  def get_postorder_array(node = root_node)
+    return [node.data] if node.left_link.nil? || node.right_link.nil?
+
+    preorder_array = []
+    preorder_array += get_postorder_array(node.left_link)
+    preorder_array += get_postorder_array(node.right_link)
+    preorder_array << node.data
+    preorder_array
+  end
+
+  def get_inorder_array(node = root_node)
+    return [node.data] if node.left_link.nil? || node.right_link.nil?
+
+    preorder_array = []
+    preorder_array += get_inorder_array(node.left_link)
+    preorder_array << node.data
+    preorder_array += get_inorder_array(node.right_link)
+    preorder_array
+  end
+
+  def get_preorder_array(node = root_node)
+    return [node.data] if node.left_link.nil? || node.right_link.nil?
+
+    preorder_array = []
+    preorder_array << node.data
+    preorder_array += get_preorder_array(node.left_link)
+    preorder_array += get_preorder_array(node.right_link)
+    preorder_array
+  end
+
   def find_min(node)
     if node.right_link.nil? && node.left_link.nil?
       node
