@@ -30,7 +30,7 @@ module Balance
   def get_node_branch_arrays(array)
     center_value = array[array.size / 2]
     smaller_values = array[0..array.size / 2] - [center_value]
-    greater_values = array[array.size / 2..array.length - 1] - [center_value]
+    greater_values = array - smaller_values - [center_value]
     [smaller_values, center_value, greater_values]
   end
 end

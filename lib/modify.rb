@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'pry'
 # Modify contains methods that modify the tree
 module Modify
   def insert(data, node = root_node)
@@ -51,19 +52,14 @@ module Modify
     node
   end
 
-  def insert_right_node(data, node)
-    if node.right_link.nil?
-      node.right_link = Node.new(data)
-    else
-      insert(data, node.right_link)
-    end
-  end
-
-  def insert_left_node(data, node)
-    if node.left_link.nil?
-      node.left_link = Node.new(data)
-    else
-      insert(data, node.left_link)
+  %w[right left].each do |branch|
+    define_method("insert_#{branch}_node") do |data, node|
+      branch_method = node.method("#{branch}_link".to_sym)
+      if branch_method.call.nil?
+        node.method("#{branch}_link=".to_sym).call(Node.new(data))
+      else
+        insert(data, branch_method.call)
+      end
     end
   end
 end
