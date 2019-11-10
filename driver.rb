@@ -7,7 +7,7 @@ load './lib/modify.rb'
 load './lib/binary_search_tree.rb'
 my_tree = Tree.new(Array.new(10) { rand(1..100) })
 print "#{my_tree.balanced?}\n"
-print "#{my_tree.level_order}\n"
+print "#{my_tree.levelorder}\n"
 print "#{my_tree.preorder}\n"
 print "#{my_tree.postorder}\n"
 print "#{my_tree.inorder}\n"
@@ -17,7 +17,7 @@ end
 print "#{my_tree.balanced?}\n"
 my_tree.rebalance!
 print "#{my_tree.balanced?}\n"
-print "#{my_tree.level_order}\n"
+print "#{my_tree.levelorder}\n"
 print "#{my_tree.preorder}\n"
 print "#{my_tree.postorder}\n"
 print "#{my_tree.inorder}\n"

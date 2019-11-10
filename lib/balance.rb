@@ -16,13 +16,13 @@ module Balance
   end
 
   def rebalance!
-    @root_node = build_tree(get_level_order_array(root_node))
+    @root_node = build_tree(get_levelorder_array(root_node))
   end
 
   def balanced?
     rebuilt_tree =
-      get_level_order_array(build_tree(get_level_order_array(root_node)))
-    get_level_order_array(@root_node) == rebuilt_tree
+      get_levelorder_array(build_tree(get_levelorder_array(root_node)))
+    get_levelorder_array(@root_node) == rebuilt_tree
   end
 
   private

@@ -12,23 +12,10 @@ class Tree
     @root_node = build_tree(array)
   end
 
-  def preorder(*args)
-    array = get_preorder_array(root_node)
-    iterate_array(array, args) { |a| yield(a) if block_given? }
-  end
-
-  def inorder(*args)
-    array = get_inorder_array(root_node)
-    iterate_array(array, args) { |a| yield(a) if block_given? }
-  end
-
-  def postorder(*args)
-    array = get_postorder_array(root_node)
-    iterate_array(array, args) { |a| yield(a) if block_given? }
-  end
-
-  def level_order(*args)
-    array = get_level_order_array(root_node)
-    iterate_array(array, args) { |a| yield(a) if block_given? }
+  %w[pre in post level].each do |order|
+    define_method("#{order}order") do |*args|
+      array = method("get_#{order}order_array".to_sym).call(root_node)
+      iterate_array(array, args) { |a| yield(a) if block_given? }
+    end
   end
 end

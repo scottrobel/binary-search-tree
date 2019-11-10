@@ -48,7 +48,7 @@ module Traverse
     end
   end
 
-  def get_level_order_array(node)
+  def get_levelorder_array(node)
     level_order_array = []
     data_queue = Queue.new
     data_queue << node
@@ -83,17 +83,15 @@ module Traverse
     end
     array
   end
-
-  def get_postorder_array(node)
-    traverse(node, %w[left right node])
-  end
-
-  def get_inorder_array(node)
-    traverse(node, %w[left node right])
-  end
-
-  def get_preorder_array(node)
-    traverse(node, %w[node left right])
+  step_array_order_hash = {
+    'post' => %w[left right node],
+    'pre' => %w[node left right],
+    'in' => %w[left node right]
+  }
+  step_array_order_hash.each do |order, step_array|
+    define_method("get_#{order}order_array") do |node|
+      traverse(node, step_array)
+    end
   end
 
   def find_min(node)
