@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
-load 'node.rb'
-load 'balance.rb'
-load 'traverse.rb'
-load 'modify.rb'
 # Tree class creates a balanced node tree
 # from an array when initialized
 # Does not handle duplicate values
