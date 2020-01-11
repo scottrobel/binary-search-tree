@@ -14,9 +14,9 @@ my_tree = Tree.new([YOUR ARRAY HERE])
 To check if a search tree is balanced use the "balanced?" method
 
 ##Transversal methods
-these methods return a list of transersed nodes in each order
-Levelorder traversal
+these methods return a list of transersed nodes
 ```
+#Levelorder traversal
 my_tree.levelorder
 ```
 ##Preorder
