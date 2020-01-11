@@ -31,3 +31,11 @@ my_tree.postorder
 ```
 my_tree.inorder
 ```
+to insert data use 
+```
+my_tree.rebalance!
+```
+To rebalance the tree after adding nodes use
+```
+my_tree.rebalance!
+```
