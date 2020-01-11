@@ -33,7 +33,7 @@ my_tree.inorder
 ```
 to insert data use 
 ```
-my_tree.rebalance!
+my_tree.insert(data)
 ```
 To rebalance the tree after adding nodes use
 ```
