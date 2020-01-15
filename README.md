@@ -1,5 +1,6 @@
 # binary-search-tree
 In this project I created an extreamly easy interface to interct, Build and balance binary search trees!
+##first. add the lib folder to your ruby project 
 Syntax: 
 to add it in your project require these files.
 ```
